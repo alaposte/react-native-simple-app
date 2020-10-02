@@ -16,15 +16,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: Installing dependencies
-        run: yarn install
-      - name: Running tests
-        run: yarn test
+      # - name: Installing dependencies
+      - run: yarn install
+      # - name: Running tests
+      - run: yarn test
       - uses: expo/expo-github-action@v5
         with:
           expo-version: 3.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      - name: Build expo app and create url artifact
+      # - name: Build expo app and create url artifact
       - run: expo build:android -t apk
       # - run: expo url:apk > apk-url.txt
