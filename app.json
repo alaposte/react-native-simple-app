@@ -18,6 +18,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.native.simpleapp"
+    },
     "ios": {
       "supportsTablet": true
     },
