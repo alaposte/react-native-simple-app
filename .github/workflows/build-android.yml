@@ -2,7 +2,7 @@ name: Build and deploy the Sestrel app with expo
 
 on:
   # pull_request:
-  pull:
+  push:
     branches:
       - [ master ]
 jobs:
