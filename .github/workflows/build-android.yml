@@ -16,6 +16,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       # - name: Installing dependencies
       - run: yarn install
       # - name: Running tests
@@ -26,5 +30,6 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       # - name: Build expo app and create url artifact
-      - run: expo build:android -t apk
+      # - run: expo build:android -t apk
+      - run: expo publish
       # - run: expo url:apk > apk-url.txt
