@@ -1,0 +1,27 @@
+name: Build and deploy the Sestrel app with expo
+
+on:
+  push:
+    branches:
+      - test
+jobs:
+  build:
+    name: Install, test and publish
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Name of branch
+        id: branch
+        uses: ashley-taylor/regex-property-action@v1.2
+        with:
+          value: ${{ github.ref }}
+          regex: ".*/"
+          flags: "" # Optional, defaults to "g"
+          replacement: ""
+     - name: branch
+       run: echo "${{ steps.branch.outputs.value }}"
