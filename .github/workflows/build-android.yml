@@ -45,10 +45,10 @@ jobs:
       - name: transfering the sestrel apk to sestrel server with Scp (Secure Copy) 
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SESTREL_HOST }} 51.79.144.208
-          username: ${{ secrets.SESTREL_USERNAME }}
-          password: ${{ secrets.SESTREL_PASSWORD }}
-          port: ${{ secrets.SESTREL_PORT }} port
+          host: ${{ secrets.DIGITAL_OCEAN_GITHUB_HOST }}
+          username: ${{ secrets.DIGITAL_OCEAN_GITHUB_USERNAME }}
+          password: ${{ secrets.DIGITAL_OCEAN_GITHUB_PASSWORD }}
+          # port: ${{ secrets.SESTREL_PORT }}
           source: /downloads
           target: /var/www/public
 
