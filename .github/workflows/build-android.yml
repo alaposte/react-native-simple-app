@@ -50,7 +50,8 @@ jobs:
 
       - name: Downloading the built apk from expo.io
         # run: wget -O sestrel-android-app.apk $(expo url:apk)
-        run: wget -O sestrel-android-app.apk ${{ steps.expo-apk-url.outputs.apk-url }}
+        # run: wget -O sestrel-android-app.apk ${{ steps.expo-apk-url.outputs.apk-url }}
+        run: curl ${{ steps.expo-apk-url.outputs.apk-url }} --output sestrel-android-app.apk
         working-directory: /downloads
 
       - name: Uploadinging the as an artifact to use it in the "deploy" job
