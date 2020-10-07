@@ -1,7 +1,6 @@
 name: Build and deploy the Sestrel app with expo
 
 on:
-  # pull_request:
   push:
     branches:
       - master
@@ -10,26 +9,46 @@ jobs:
     name: Install, test and publish
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 
-        uses: actions/checkout@v2
-      - name: Using node version 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      # - name: Installing dependencies
-      - run: yarn install
-      # - name: Running tests
-      - run: yarn test
-      - uses: expo/expo-github-action@v5
+      - name: Using expo github action (v5)
+        uses: expo/expo-github-action@v5
         with:
           expo-version: 3.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      # - name: Build expo app and create url artifact
-      - run: expo build:android -t apk
-      # - run: expo publish
-      # - run: expo url:apk > apk-url.txt
+      - name: Build expo app and create url artifact
+        run: expo build:android -t apk
+      - name: Downloading the built apk from expo.io
+        run: wget -O sestrel-android-app.apk $(expo url:apk)
+        working-directory: /downloads
+
+      - name: Uploadinging the as an artifact to use it in the "deploy" job
+        uses: actions/upload-artifact@v2
+        with:
+          name: sestrel-android-app
+          path: /downloads/sestrel-android-app.apk
+
+  deploy:
+    needs: build
+    name: Download and deploy the setrel app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloading the sestrel app from "build" job
+        uses: actions/download-artifact@v2
+        with:
+          name: sestrel-android-app
+          path: /downloads/sestrel-android-app.apk
+        
+      - name: Displaying structure of downloaded file
+        run: ls -R
+        working-directory: /downloads
+
+      - name: transfering the sestrel apk to sestrel server with Scp (Secure Copy) 
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SESTREL_HOST }} 51.79.144.208
+          username: ${{ secrets.SESTREL_USERNAME }}
+          password: ${{ secrets.SESTREL_PASSWORD }}
+          port: ${{ secrets.SESTREL_PORT }} port
+          source: /downloads
+          target: /var/www/public
+
