@@ -19,6 +19,19 @@ jobs:
 
       - name: Installing dependencies
         run: yarn install
+      
+      - name: Getting yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      
+      - name: Caching dependencies
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Using expo github action (v5)
         uses: expo/expo-github-action@v5
@@ -30,6 +43,9 @@ jobs:
       #  - name: Build expo app and create url artifact
       #    run: expo build:android -t apk
         
+      - name: Displaying the expo apk url
+        run: expo url:apk
+
       - name: Downloading the built apk from expo.io
         run: wget -O sestrel-android-app.apk $(expo url:apk)
         working-directory: /downloads
