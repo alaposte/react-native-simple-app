@@ -50,11 +50,20 @@ jobs:
       - name: Displaying and saving the expo apk url for the next download step
         id: expo-apk-url
         run: echo "::set-output name=apk-url::$(expo url:apk)"
+      
+      - name: Find and Replace the stars in the url with the expo username
+        id: find-and-replace
+        uses: frabert/replace-string-action@v1.2
+        with:
+          pattern: '\*+(?=\/)'
+          string: ${{ steps.expo-apk-url.outputs.apk-url }}
+          # replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
+          replace-with: atcheri
 
       - name: Downloading the built apk from expo.io
         # run: wget -O sestrel-android-app.apk $(expo url:apk)
         # run: wget -O sestrel-android-app.apk ${{ steps.expo-apk-url.outputs.apk-url }}
-        run: curl ${{ steps.expo-apk-url.outputs.apk-url }} --output sestrel-android-app.apk
+        run: curl ${{ steps.find-and-replace.outputs.replaced }} --output sestrel-android-app.apk
         working-directory: /downloads
 
       - name: Uploadinging the as an artifact to use it in the "deploy" job
