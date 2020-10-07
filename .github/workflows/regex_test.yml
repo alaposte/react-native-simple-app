@@ -24,7 +24,8 @@ jobs:
         with:
           pattern: '\*+(?=\/)'
           string: https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40*************/stlp-ui-b029f00fceaf41e9918138057804feb8-signed.apk
-          replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
+          # replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
+          replace-with: atcheri
 
       - name: branch
         run: echo "${{ steps.find-and-replace.outputs.replaced }}"
