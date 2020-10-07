@@ -58,7 +58,7 @@ jobs:
           pattern: '\*+(?=\/)'
           string: ${{ steps.expo-apk-url.outputs.apk-url }}
           # replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
-          replace-with: atcheri
+          replace-with: 'atcheri'
 
       - name: Displaying the url after replacing the stars
         run: echo ${{ steps.find-and-replace.outputs.replaced }}
