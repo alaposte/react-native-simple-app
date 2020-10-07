@@ -8,6 +8,9 @@ jobs:
   build:
     name: Install, test and publish
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v2
