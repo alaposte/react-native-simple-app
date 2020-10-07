@@ -23,8 +23,8 @@ jobs:
         uses: frabert/replace-string-action@v1.2
         with:
           pattern: '\*+(?=\/)'
-          string: ${{ github.ref }}
+          string: https://exp-shell-app-assets.s3.us-west-1.amazonaws.com/android/%40*************/stlp-ui-b029f00fceaf41e9918138057804feb8-signed.apk
           replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
 
       - name: branch
-        run: echo "${{ steps.find-and-replace.branch.outputs.replaced }}"
+        run: echo "${{ steps.find-and-replace.outputs.replaced }}"
