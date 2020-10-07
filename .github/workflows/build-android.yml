@@ -15,8 +15,8 @@ jobs:
           expo-version: 3.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-      - name: Build expo app and create url artifact
-        run: expo build:android -t apk
+      # - name: Build expo app and create url artifact
+      #   run: expo build:android -t apk
       - name: Downloading the built apk from expo.io
         run: wget -O sestrel-android-app.apk $(expo url:apk)
         working-directory: /downloads
