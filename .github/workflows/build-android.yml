@@ -47,7 +47,7 @@ jobs:
       #  - name: Build expo app and create url artifact
       #    run: expo build:android -t apk
         
-      - name: Displaying and saving the expo apk url for the next download step
+      - name: Saving the expo apk url for the next download step
         id: expo-apk-url
         run: echo "::set-output name=apk-url::$(expo url:apk)"
       
@@ -60,6 +60,9 @@ jobs:
           # replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
           replace-with: atcheri
 
+      - name: Displaying the url after replacing the stars
+        run: echo ${{ steps.find-and-replace.outputs.replaced }}
+        
       - name: Downloading the built apk from expo.io
         # run: wget -O sestrel-android-app.apk $(expo url:apk)
         # run: wget -O sestrel-android-app.apk ${{ steps.expo-apk-url.outputs.apk-url }}
