@@ -27,4 +27,4 @@ jobs:
           replace-with: ${{ secrets.EXPO_CLI_USERNAME }}
 
       - name: branch
-        run: echo "${{ find-and-replace.branch.outputs.replaced }}"
+        run: echo "${{ steps.find-and-replace.branch.outputs.replaced }}"
