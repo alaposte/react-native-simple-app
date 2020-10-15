@@ -44,8 +44,8 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
 
-      #  - name: Build expo app and create url artifact
-      #    run: expo build:android -t apk
+      - name: Build expo app and create url artifact
+        run: expo build:android -t apk
         
       - name: Saving the expo apk url for the next download step
         id: expo-apk-url
